@@ -2,7 +2,7 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInsert v-on:addTodo="addTodoItem"></TodoInsert>
-    <TodoList v-bind:propsdata="todoList"></TodoList>
+    <TodoList v-bind:propsdata="todoList" v-on:removeTodo="removeTodo"></TodoList>
     <TodoFooter></TodoFooter>
 
   </div>
@@ -25,6 +25,10 @@ export default {
       var obj = {completed:false, item: todo};
       localStorage.setItem(todo, JSON.stringify(obj));
       this.todoList.push(obj); 
+    },
+    removeTodo : function(todo, index){
+      localStorage.removeItem(todo);
+      this.todoList.splice(index,1);
     }
   },
   created: function() {

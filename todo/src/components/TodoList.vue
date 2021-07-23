@@ -20,8 +20,7 @@ export default {
   props: ['propsdata'],
   methods:{
     removeTodo : function(todo, index){
-      localStorage.removeItem(todo);
-      this.todoList.splice(index,1); 
+      this.$emit('removeTodo',todo, index); 
     },
     checkComplete: function(todo){
       todo.completed = !todo.completed; 
