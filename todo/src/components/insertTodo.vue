@@ -1,7 +1,7 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text">
-    <span class="addContainer">
+    <input type="text" v-model="newTodo" v-on:keyup.enter="addTodo">
+    <span class="addContainer" @click="addTodo">
       <i class="far fa-calendar-plus addBtn"></i>
     </span>
   </div>
@@ -9,6 +9,24 @@
 
 <script>
 export default {
+  data : function(){
+    return {
+      newTodo: ""
+    }
+  },
+  methods : {
+    addTodo : function(){
+      //빈 값 입력 방지
+      if(this.newTodo !== ''){
+        var obj = {completed:false, item: this.newTodo};
+        localStorage.setItem(this.newTodo, JSON.stringify(obj)); 
+        this.clearInput(); 
+      }
+    },
+    clearInput: function(){
+      this.newTodo = ''; 
+    }
+  }
 
 }
 </script>

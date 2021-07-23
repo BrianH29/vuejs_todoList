@@ -1,12 +1,16 @@
 <template>
   <div class="clearAllContainer">
-    <span class="clearAllBtn">CLEAR ALL</span>  
+    <span class="clearAllBtn" @click="clearAll">CLEAR ALL</span>  
   </div>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    clearAll : function(){
+      localStorage.clear(); 
+    }
+  }
 }
 </script>
 

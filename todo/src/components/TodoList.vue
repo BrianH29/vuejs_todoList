@@ -1,15 +1,47 @@
 <template>
   <div>
     <ul>
-      <li>hi</li>
-      <li>goodbye</li>
-      <li>what</li>
+      <li v-for="(todo, index) in todoList" v-bind:key="todo.item" class="shadow">
+        <i class="fas fa-check checkBtn" 
+        v-bind:class="{checkBtnCompleted: todo.completed}"
+        v-on:click="checkComplete(todo)">
+        </i>
+        <span v-bind:class="{checkBtnCompleted:todo.completed}">{{ todo.item }}</span>
+        <span class="removeBtn" v-on:click="removeTodo(todo,index)">
+          <i class="fas fa-trash-alt"></i>
+        </span>
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
+  data: function(){
+    return {
+      todoList : [],
+    }
+  },
+  methods:{
+    removeTodo : function(todo, index){
+      localStorage.removeItem(todo);
+      this.todoList.splice(index,1); 
+    },
+    checkComplete: function(todo){
+      todo.completed = !todo.completed; 
+      localStorage.removeItem(todo.item);
+      localStorage.setItem(todo.item, JSON.stringify(todo));
+    }
+  },
+  created : function(){
+    if(localStorage.length > 0){
+      for(let i = 0; i<localStorage.length; i++){
+        if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
+          this.todoList.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        }
+      }
+    }
+  }
 
 }
 </script>
@@ -37,7 +69,7 @@ export default {
   }
   .checkBtn{
     line-height: 45px;
-    color: #62acde;
+    color: #18b940;
     margin-right: 5px;
   }
   .checkBtnCompleted{
