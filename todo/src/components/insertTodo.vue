@@ -18,8 +18,7 @@ export default {
     addTodo : function(){
       //빈 값 입력 방지
       if(this.newTodo !== ''){
-        var obj = {completed:false, item: this.newTodo};
-        localStorage.setItem(this.newTodo, JSON.stringify(obj)); 
+        this.$emit('addTodo',this.newTodo);
         this.clearInput(); 
       }
     },
